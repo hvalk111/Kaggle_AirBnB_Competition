@@ -12,7 +12,7 @@
 ## [Data Preprocessing](Data_cleaning.ipynb)
 > * Date features were converted to datetime objects, then converted to ordinal values. 
 > * Rows were the first booking occured before account creation (29 observations) were dropped
-    > * Given the number of observations without a first booking date, first booking date was then converted to boolean
+> * Given the number of observations without a first booking date, first booking date was then converted to boolean
 > * The age feature contained many misentered values. Entries that contained birth year instead of age, were replaced with the proper age value. Ages from below 16 and above 100 were dropped from the training set. Missing values in the training set were then imputed with the mean age of remaining observations. Missing values and values below 16 and above 100 in the testing set were also imputed with the mean of the corrected ages in the training set.
 > * A feature for the time spent on the AirBnb website was added to the testing and training datasets by totalling all individual website action durations for each user, as found in the sessions dataset. Users without session information were imputed with the mean duration.
 > * A feature for first language levenshtein distance from English was added by pulling information from the countries dataset. Users with a first language that wasn't found in the countries dataset were imputed with zeros (English)
@@ -28,24 +28,31 @@ After splitting our data, we used Standard Scalar from sklearn's preprocessing l
 #### Initial Fit
 For our initial models, we fit Logistic Regression, Random Forest, SVC, and MultinomialNB models with their default hyperparameters. 
 Our accuracy scores on the train and tests splits were as follows:
+
 | Model               | Train Accuracy | Test Accuracy |
 |---------------------|----------------|---------------|
 | Logistic Regression | 0.8762         | 0.8761        |
 | Multinomial NB      | 0.5851         | 0.5851        |
 | SVC                 | 0.8758         | 0.8774        |
 | Random Forest       | 0.9963         | 0.8547        |
+
 After reviewing the scores from our models, we decided that the Logistic Regression and Support Vector Classifier models were best suited for this type of classification problem, and moved forward with Gridsearching over different hyperparameters.
 
 ### GridSearch
 **For the Logistic Regression Model, the following hyperparameters were tested:**
+
 | Parameter | Values               |
 |-----------|----------------------|
 | C         | 0, 0.01, 1   |
 | Solver    | 'lbfgs', 'liblinear' |
 | Penalty   | 'l1', 'l2'           |
+
 A random state of 42 was used in each fit, a 3 fold cross validation, as well as 5000 maximum iterations, to avoid convergence warnings.
+
 **For the Support Vector Classifier, the following hyperparameters were tested:**
+
 | Parameter | Values    |
 |-----------|-----------|
 | C         | 0.01, 0.1 |
+
 A random state of 42 was used in each fit, as well as a 3 fold cross validation.
